@@ -464,9 +464,9 @@ if __name__ == "__main__":
         n_classes = int(sys.argv[1])
         weightfile = sys.argv[2]
         imgfile = sys.argv[3]
-        height = sys.argv[4]
+        height = int(sys.argv[4])
         width = int(sys.argv[5])
-        namesfile = int(sys.argv[6])
+        namesfile = sys.argv[6]
     else:
         print('Usage: ')
         print('  python models.py num_classes weightfile imgfile namefile')
@@ -506,4 +506,6 @@ if __name__ == "__main__":
             print("please give namefile")
 
     class_names = load_class_names(namesfile)
-    plot_boxes_cv2(img, boxes[0], 'predictions.jpg', class_names)
+    pred_fname = 'predictions/pred_' + imgfile[imgfile.rfind('\\')+1:]
+    plot_boxes_cv2(img, boxes[0], pred_fname, class_names)
+    

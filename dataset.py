@@ -408,7 +408,7 @@ class Yolo_dataset(Dataset):
         target['iscrowd'] = torch.zeros((num_objs,), dtype=torch.int64)
         return img, target
 
-
+## MOD
 def get_image_id(filename:str) -> int:
     """
     Convert a string to a integer.
@@ -423,11 +423,12 @@ def get_image_id(filename:str) -> int:
     >>> no = f"{int(no):04d}"
     >>> return int(lv+no)
     """
-    raise NotImplementedError("Create your own 'get_image_id' function")
-    lv, no = os.path.splitext(os.path.basename(filename))[0].split("_")
-    lv = lv.replace("level", "")
-    no = f"{int(no):04d}"
-    return int(lv+no)
+    # raise NotImplementedError("Create your own 'get_image_id' function")
+    # lv, no = os.path.splitext(os.path.basename(filename))[0].split("_")
+    # lv = lv.replace("level", "")
+    # no = f"{int(no):04d}"
+    id = os.path.splitext(os.path.basename(filename))[0]
+    return int(id)
 
 
 if __name__ == "__main__":

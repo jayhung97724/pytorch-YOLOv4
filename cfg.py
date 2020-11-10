@@ -18,10 +18,10 @@ _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 Cfg = EasyDict()
 
-Cfg.use_darknet_cfg = True
-Cfg.cfgfile = os.path.join(_BASE_DIR, 'cfg', 'yolov4.cfg')
+Cfg.use_darknet_cfg = False
+Cfg.cfgfile = os.path.join(_BASE_DIR, 'cfg', 'yolov4-back.cfg')
 
-Cfg.batch = 64
+Cfg.batch = 32
 Cfg.subdivisions = 16
 Cfg.width = 608
 Cfg.height = 608
@@ -34,9 +34,9 @@ Cfg.exposure = 1.5
 Cfg.hue = .1
 
 Cfg.learning_rate = 0.00261
-Cfg.burn_in = 1000
-Cfg.max_batches = 500500
-Cfg.steps = [400000, 450000]
+Cfg.burn_in = 100
+Cfg.max_batches = 6000
+Cfg.steps = [4800, 5400]
 Cfg.policy = Cfg.steps
 Cfg.scales = .1, .1
 
@@ -45,7 +45,7 @@ Cfg.mosaic = 1
 
 Cfg.letter_box = 0
 Cfg.jitter = 0.2
-Cfg.classes = 80
+Cfg.classes = 1
 Cfg.track = 0
 Cfg.w = Cfg.width
 Cfg.h = Cfg.height
@@ -53,7 +53,7 @@ Cfg.flip = 1
 Cfg.blur = 0
 Cfg.gaussian = 0
 Cfg.boxes = 60  # box num
-Cfg.TRAIN_EPOCHS = 300
+Cfg.TRAIN_EPOCHS = 100
 Cfg.train_label = os.path.join(_BASE_DIR, 'data', 'train.txt')
 Cfg.val_label = os.path.join(_BASE_DIR, 'data' ,'val.txt')
 Cfg.TRAIN_OPTIMIZER = 'adam'
