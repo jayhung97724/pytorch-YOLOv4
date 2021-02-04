@@ -1,5 +1,6 @@
 from models import *
 import glob
+import numpy as np
 
 if __name__ == "__main__":
     import sys
@@ -14,11 +15,12 @@ if __name__ == "__main__":
     #     width = int(sys.argv[5])
     # elif len(sys.argv) == 7:
     n_classes = 1
-    weightfile = '.\checkpoints\Yolov4_epoch100.pth'
+    # weightfile = './OLD/Yolov4_epoch30.pth'
+    weightfile = './OLD/Yolov4_epoch100.pth'
     img_dir = './data/mAp/images/'
     height = 608
     width = 608
-    namesfile = '.\data\classes.names'
+    namesfile = './data/classes.names'
     # else:
     #     print('Usage: ')
     #     print('  python models.py num_classes weightfile imgfile namefile')
@@ -33,6 +35,7 @@ if __name__ == "__main__":
         model.cuda()
 
     img_files = glob.glob(os.path.join(img_dir, '*.png'))
+    time = []
     for imgfile in img_files:
         img = cv2.imread(imgfile)
 
@@ -49,15 +52,16 @@ if __name__ == "__main__":
 
         for i in range(2):  # This 'for' loop is for speed check
                             # Because the first iteration is usually longer
-            boxes = do_detect(model, sized, 0.4, 0.6, use_cuda)
+            boxes, period = do_detect(model, sized, 0.4, 0.6, use_cuda)
 
         # print(len(boxes))
         # print(boxes)
         # print(len(box))
         # print(box)
         box = boxes[0]
-        pred_fname = 'predictions/pred_' + imgfile[imgfile.rfind('\\')+1:]
-        output_fname = 'predictions/pred_' + imgfile[imgfile.rfind('\\')+1:imgfile.rfind('.png')] + '.txt'
+        pred_fname = 'predictions/mAp/' + imgfile[imgfile.rfind('\\')+1:]
+        output_fname = 'predictions/mAp/' + imgfile[imgfile.rfind('\\')+1:imgfile.rfind('.png')] + '.txt'
+        
         with open(output_fname , 'w') as outfile:
             if len(box) >= 1:
                 class_names = load_class_names(namesfile)
@@ -67,8 +71,14 @@ if __name__ == "__main__":
                 print('%s: %f' % (class_names[cls_id], cls_conf))
                 blist = map(str, box[0][0:4])
                 outline = str(cls_id) + ' ' + ' '.join(blist) + ' ' + str(cls_conf) + '\n'
+                # print('')
                 outfile.write(outline)
+                # print('===\n %f \n===' % period)
+                time.append(period)
             else:
                 print('no result')
                 outline = '-1\n'
                 outfile.write(outline)
+    print(np.mean(time))
+        
+        

@@ -17,9 +17,11 @@ log
 
 *.jpg
 *.json
+*.png
 OLD
 data/outcome
 data/back
 data/back_val
+data/back_old
 data/mAp
 predictions/*.png
