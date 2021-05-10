@@ -1,10 +1,10 @@
 from models import *
 import glob
 import numpy as np
+import sys
+import cv2
 
 if __name__ == "__main__":
-    import sys
-    import cv2
 
     namesfile = None
     # if len(sys.argv) == 6:
@@ -15,11 +15,11 @@ if __name__ == "__main__":
     #     width = int(sys.argv[5])
     # elif len(sys.argv) == 7:
     n_classes = 1
-    # weightfile = './OLD/Yolov4_epoch30.pth'
-    weightfile = './OLD/Yolov4_epoch100.pth'
-    img_dir = './data/mAp/images/'
-    height = 608
-    width = 608
+    # weightfile = './OLD/Yolov4_epoch100.pth'
+    weightfile = './checkpoints/Yolov4_epoch30.pth'
+    img_dir = './data/mAp/images'
+    height = 512
+    width = 512
     namesfile = './data/classes.names'
     # else:
     #     print('Usage: ')
@@ -59,8 +59,8 @@ if __name__ == "__main__":
         # print(len(box))
         # print(box)
         box = boxes[0]
-        pred_fname = 'predictions/mAp/' + imgfile[imgfile.rfind('\\')+1:]
-        output_fname = 'predictions/mAp/' + imgfile[imgfile.rfind('\\')+1:imgfile.rfind('.png')] + '.txt'
+        pred_fname = 'predictions/mAp512_30/' + imgfile[imgfile.rfind('\\')+1:]
+        output_fname = 'predictions/mAp512_30/' + imgfile[imgfile.rfind('\\')+1:imgfile.rfind('.png')] + '.txt'
         
         with open(output_fname , 'w') as outfile:
             if len(box) >= 1:
